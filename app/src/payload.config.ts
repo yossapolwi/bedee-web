@@ -41,7 +41,7 @@ export default buildConfig({
     // maps to "/"), so this switches on collectionConfig.slug rather than
     // a single naive `/${data.slug}` guess.
     livePreview: {
-      collections: ['pages', 'services', 'posts', 'news-and-activities'],
+      collections: ['pages', 'services', 'posts', 'news-and-activities', 'promotions'],
       breakpoints: [
         { name: 'mobile', label: 'Mobile', width: 375, height: 667 },
         { name: 'desktop', label: 'Desktop', width: 1440, height: 900 },
@@ -54,6 +54,8 @@ export default buildConfig({
             return `/${data.slug}`
           case 'news-and-activities':
             return `/news-activities/${data.slug}`
+          case 'promotions':
+            return `/promotion/${data.slug}`
           case 'posts': {
             const categoryId = typeof data.category === 'object' ? data.category?.id : data.category
             if (!categoryId) return null

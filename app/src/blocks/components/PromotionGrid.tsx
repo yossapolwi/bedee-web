@@ -1,8 +1,10 @@
 import Image from 'next/image'
+import { promotionDetailHref, promotionLinkOpensInNewTab } from '@/lib/promotionUrl'
 
 type Promotion = {
   id: string
   title: string
+  slug?: string | null
   banner: { url?: string | null; alt?: string | null }
   ctaUrl?: string | null
 }
@@ -24,14 +26,16 @@ export function PromotionGrid({
   // instead of the full-width banner treatment the source actually uses.
   if (promotions.length === 1) {
     const promo = promotions[0]
+    const href = promotionDetailHref(promo)
+    const newTab = promotionLinkOpensInNewTab(href)
     return (
       <section className="py-16">
         <div className="mx-auto max-w-5xl px-6 text-center">
           {heading && <h2 className="mb-8 text-[28px] font-semibold text-primary">{heading}</h2>}
           <a
-            href={promo.ctaUrl || '#'}
-            target={promo.ctaUrl ? '_blank' : undefined}
-            rel={promo.ctaUrl ? 'noopener noreferrer' : undefined}
+            href={href}
+            target={newTab ? '_blank' : undefined}
+            rel={newTab ? 'noopener noreferrer' : undefined}
             className="block text-left focus-visible:outline-none focus-visible:[box-shadow:0_0_0_3px_rgba(49,125,245,0.4)]"
           >
             <div className="relative aspect-[1024/584] w-full overflow-hidden bg-gray-100">
@@ -57,12 +61,15 @@ export function PromotionGrid({
       <div className="mx-auto max-w-5xl px-6 text-center">
         {heading && <h2 className="text-[28px] font-semibold text-primary">{heading}</h2>}
         <div className="mt-8 grid grid-cols-1 gap-8 text-left sm:grid-cols-2 lg:grid-cols-3">
-          {promotions.map((promo) => (
+          {promotions.map((promo) => {
+            const href = promotionDetailHref(promo)
+            const newTab = promotionLinkOpensInNewTab(href)
+            return (
             <a
               key={promo.id}
-              href={promo.ctaUrl || '#'}
-              target={promo.ctaUrl ? '_blank' : undefined}
-              rel={promo.ctaUrl ? 'noopener noreferrer' : undefined}
+              href={href}
+              target={newTab ? '_blank' : undefined}
+              rel={newTab ? 'noopener noreferrer' : undefined}
               className="block focus-visible:outline-none focus-visible:[box-shadow:0_0_0_3px_rgba(49,125,245,0.4)]"
             >
               <div className="relative aspect-video overflow-hidden bg-gray-100">
@@ -78,7 +85,8 @@ export function PromotionGrid({
               </div>
               <h3 className="mt-3 line-clamp-2 font-bold text-primary">{promo.title}</h3>
             </a>
-          ))}
+            )
+          })}
         </div>
       </div>
     </section>

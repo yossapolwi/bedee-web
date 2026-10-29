@@ -3,6 +3,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react'
 import { ExpertTabs } from '@/blocks/components/ExpertTabs'
 import { FAQ } from '@/blocks/components/FAQ'
 import type { Service } from '@/payload-types'
+import { promotionDetailHref } from '@/lib/promotionUrl'
 
 // Section pattern from plans/01-site-dna.md §1.8 (teleconsultation): intro,
 // why-choose-us, steps, benefits, BDMS-affiliated staff, suitable symptoms,
@@ -146,8 +147,9 @@ export function ServiceDetail({ service }: { service: Service }) {
           <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {promotions.map((promo) => {
               const banner = typeof promo.banner === 'object' ? promo.banner : null
+              const href = promotionDetailHref(promo)
               return (
-                <a key={promo.id} href={promo.ctaUrl || '#'} className="block rounded-2xl bg-panel-2 p-4">
+                <a key={promo.id} href={href} className="block rounded-2xl bg-panel-2 p-4">
                   {banner?.url && (
                     <Image
                       src={banner.url}

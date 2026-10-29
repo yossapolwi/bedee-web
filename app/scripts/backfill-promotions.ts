@@ -127,7 +127,13 @@ for (const def of promoDefs) {
   )
   const doc = await payload.create({
     collection: 'promotions',
-    data: { title: def.title, slug: def.slug, banner: media.id, ctaUrl: def.ctaUrl },
+    data: {
+      title: def.title,
+      slug: def.slug,
+      banner: media.id,
+      ctaUrl: def.ctaUrl,
+      _status: 'published',
+    },
     overrideAccess: true,
   })
   promoDocs[def.slug] = { id: doc.id as number }
