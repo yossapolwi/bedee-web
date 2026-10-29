@@ -1,5 +1,8 @@
 # Required environment variables
 
+Use **Node.js 26.x** locally (`nvm use` in `app/` reads `.nvmrc`). Vercel uses the
+same major version via `package.json` `engines.node`.
+
 Create a local `.env` file (never commit it) with:
 
 ```
