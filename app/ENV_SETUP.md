@@ -1,7 +1,9 @@
 # Required environment variables
 
-Use **Node.js 26.x** locally (`nvm use` in `app/` reads `.nvmrc`). Vercel uses the
-same major version via `package.json` `engines.node`.
+Use **Node.js 26.x** locally (`nvm use` in `app/` reads `.nvmrc`). The repo declares
+`engines.node` `26.x` for tooling consistency. **Vercel** (`gitcwits-projects/bedee-web`)
+may still run **24.x** until the project dashboard / CLI exposes 26.x — check Project
+Settings → Node.js Version before deploying with 26-only APIs.
 
 Create a local `.env` file (never commit it) with:
 
