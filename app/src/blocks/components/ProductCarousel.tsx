@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
+import { productDetailHref, productLinkOpensInNewTab } from '@/lib/productUrl'
 
 type Product = {
   id: string
@@ -86,7 +87,9 @@ export function ProductCarousel({
         >
           {products.map((product) => {
             const cardClassName =
-              'w-[46%] shrink-0 snap-start focus-visible:outline-none focus-visible:[box-shadow:0_0_0_3px_rgba(49,125,245,0.4)] sm:w-[31%] lg:w-[23%]'
+              'flex w-[46%] shrink-0 snap-start flex-col focus-visible:outline-none focus-visible:[box-shadow:0_0_0_3px_rgba(49,125,245,0.4)] sm:w-[31%] lg:w-[23%]'
+            const detailHref = productDetailHref(product)
+            const shopHref = product.externalUrl
             const cardContent = (
               <>
                 <div className="relative aspect-square overflow-hidden bg-panel-1">
@@ -111,27 +114,34 @@ export function ProductCarousel({
                     )}
                   </p>
                 )}
+                {product.slug ? (
+                  <span className="mt-3 inline-flex w-full items-center justify-center rounded-pill bg-primary px-4 py-2 text-sm font-medium text-white">
+                    Buy now
+                  </span>
+                ) : null}
               </>
             )
 
-            // Health-mall products get a real in-house detail page; other
-            // uses of this block (e.g. health-plaza's packages) have no
-            // `slug` and keep linking straight out to the source page.
-            return product.slug ? (
-              <Link key={product.id} data-card href={`/health-mall/${product.slug}`} className={cardClassName}>
+            if (product.slug) {
+              return (
+                <Link key={product.id} data-card href={detailHref} className={cardClassName}>
+                  {cardContent}
+                </Link>
+              )
+            }
+
+            return (
+              <div key={product.id} data-card className={cardClassName}>
                 {cardContent}
-              </Link>
-            ) : (
-              <a
-                key={product.id}
-                data-card
-                href={product.externalUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cardClassName}
-              >
-                {cardContent}
-              </a>
+                <a
+                  href={shopHref}
+                  target={productLinkOpensInNewTab(shopHref) ? '_blank' : undefined}
+                  rel={productLinkOpensInNewTab(shopHref) ? 'noopener noreferrer' : undefined}
+                  className="mt-3 inline-flex w-full items-center justify-center rounded-pill bg-primary px-4 py-2 text-sm font-medium text-white"
+                >
+                  Buy now
+                </a>
+              </div>
             )
           })}
         </div>
