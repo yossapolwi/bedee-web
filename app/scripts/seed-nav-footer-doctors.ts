@@ -21,7 +21,7 @@ const NAV_ITEMS = [
       { label: 'ปรึกษาหมอ', url: '/teleconsultation' },
       { label: 'ปรึกษาเภสัชกร', url: '/telepharmacy' },
       { label: 'ช้อปสินค้าสุขภาพ', url: '/health-mall' },
-      { label: 'ช้อปแพ็กสุขภาพ', url: 'https://shop.bedee.com/th' },
+      { label: 'ช้อปแพ็กสุขภาพ', url: 'https://shop.bedee.com/th/package' },
     ],
   },
   { label: 'โปรโมชันล่าสุด', url: '/promotions' },
