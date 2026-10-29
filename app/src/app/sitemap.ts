@@ -9,12 +9,13 @@ const SITE_URL = 'https://bedee-payload.vercel.app'
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const payload = await getPayload({ config })
 
-  const [pages, services, posts, products, newsAndActivities] = await Promise.all([
+  const [pages, services, posts, products, newsAndActivities, promotions] = await Promise.all([
     payload.find({ collection: 'pages', limit: 200, depth: 0 }),
     payload.find({ collection: 'services', limit: 200, depth: 0 }),
     payload.find({ collection: 'posts', limit: 1000, depth: 1, sort: '-publishedAt' }),
     payload.find({ collection: 'products', limit: 200, depth: 0 }),
     payload.find({ collection: 'news-and-activities', limit: 200, depth: 0 }),
+    payload.find({ collection: 'promotions', limit: 200, depth: 0 }),
   ])
 
   // "home" is served at the site root (already listed below) — the same
@@ -58,6 +59,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: item.updatedAt,
   }))
 
+  const promotionEntries = promotions.docs.map((promo) => ({
+    url: `${SITE_URL}/promotion/${promo.slug}`,
+    lastModified: promo.updatedAt,
+  }))
+
   // Static routes with no backing `pages` doc (they were converted from a
   // flat richTextContent dump to a real bespoke route — see contact-us,
   // corporate, and news-activities' git history) — list them by hand so
@@ -75,5 +81,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...postEntries,
     ...productEntries,
     ...newsEntries,
+    ...promotionEntries,
   ]
 }
