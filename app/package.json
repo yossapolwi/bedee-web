@@ -5,13 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "payload generate:types && next build",
+    "build": "npm run generate:types && next build",
     "start": "next start",
     "payload": "payload",
-    "generate:types": "payload generate:types",
-    "import:poc": "node --env-file=.env --import tsx scripts/import-live-poc.ts",
-    "import:homepage": "node --env-file=.env --import tsx scripts/import-live-homepage.ts",
-    "import:health-mall-shop": "node --env-file=.env --import tsx scripts/replace-health-mall-shop-products.ts"
+    "generate:types": "cross-env NODE_OPTIONS=--disable-warning=DEP0205 payload generate:types",
+    "import:poc": "node --disable-warning=DEP0205 --env-file=.env --import tsx scripts/import-live-poc.ts",
+    "import:homepage": "node --disable-warning=DEP0205 --env-file=.env --import tsx scripts/import-live-homepage.ts",
+    "import:health-mall-shop": "node --disable-warning=DEP0205 --env-file=.env --import tsx scripts/replace-health-mall-shop-products.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "3.86.0",
@@ -28,17 +28,17 @@
     "sharp": "^0.35.3"
   },
   "devDependencies": {
-    "@types/node": "22.5.4",
+    "@types/node": "^22.13.14",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.1",
     "autoprefixer": "^10.4.20",
     "happy-dom": "20.11.1",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.15",
-    "tsx": "4.22.4",
+    "tsx": "^4.23.15",
     "typescript": "5.7.2"
   },
   "engines": {
-    "node": "^18.20.2 || >=20.9.0"
+    "node": "26.x"
   }
 }
