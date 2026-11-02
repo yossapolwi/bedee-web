@@ -3,6 +3,7 @@
 ## Project layout
 
 - The application lives in `app/`; run Node.js and npm commands from that directory.
+- Target **Node.js 26.x** (see `app/.nvmrc` and `app/package.json` `engines`).
 - This is a Next.js 15 application using React 19, TypeScript, Tailwind CSS 3, and Payload CMS 3.
 - Payload collections, globals, access rules, and configuration live under `app/src/`.
 - Planning and content-model documents live in `plans/`.

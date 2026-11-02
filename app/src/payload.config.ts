@@ -2,6 +2,7 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import path from 'path'
+import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 import { buildConfig } from 'payload'
 
@@ -27,6 +28,7 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  sharp,
   admin: {
     user: Users.slug,
     meta: {
