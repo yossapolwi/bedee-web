@@ -24,3 +24,6 @@ app/src/payload-types.ts
 
 # OS
 .DS_Store
+
+# Reference files
+reference

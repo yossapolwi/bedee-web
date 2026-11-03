@@ -309,8 +309,8 @@ const content = {
 
 const data = {
   title: 'นโยบายความเป็นส่วนตัว',
-  slug: 'privacy-policy',
-  sourceUrl: 'https://www.bedee.com/privacy-policy',
+  slug: 'privacy-policy-th',
+  sourceUrl: 'https://www.bedee.com/privacy-policy-th',
   layout: [
     {
       blockType: 'richTextContent' as const,
@@ -326,16 +326,22 @@ const data = {
   _status: 'published' as const,
 }
 
-const existing = (
+const legacy = (
   await payload.find({ collection: 'pages', where: { slug: { equals: 'privacy-policy' } }, limit: 1 })
 ).docs[0]
+const existing = (
+  await payload.find({ collection: 'pages', where: { slug: { equals: 'privacy-policy-th' } }, limit: 1 })
+).docs[0]
 
-if (existing) {
+if (legacy && !existing) {
+  await payload.update({ collection: 'pages', id: legacy.id, data, overrideAccess: true })
+  console.log('renamed privacy-policy → privacy-policy-th', legacy.id)
+} else if (existing) {
   await payload.update({ collection: 'pages', id: existing.id, data, overrideAccess: true })
-  console.log('updated existing privacy-policy page', existing.id)
+  console.log('updated existing privacy-policy-th page', existing.id)
 } else {
   const created = await payload.create({ collection: 'pages', data, overrideAccess: true })
-  console.log('created privacy-policy page', created.id)
+  console.log('created privacy-policy-th page', created.id)
 }
 
 process.exit(0)

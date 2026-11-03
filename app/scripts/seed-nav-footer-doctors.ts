@@ -11,8 +11,7 @@ const dryRun = process.argv.includes('--dry-run')
 // see /impeccable critique findings: header.navItems and footer.linkGroups were
 // both empty on the deployed site. Internal paths point at this app's own
 // routes per PRODUCT.md's "independence from the original site" principle;
-// /faqs and /privacy-policy have no migrated page yet, so those two links
-// point at bedee.com temporarily rather than 404ing or being invented.
+// /faqs is still external until migrated; privacy uses /privacy-policy-th.
 const NAV_ITEMS = [
   {
     label: 'บริการของเรา',
@@ -65,7 +64,7 @@ const FOOTER_LINK_GROUPS = [
   {
     heading: 'กฏหมาย',
     links: [
-      { label: 'นโยบายความเป็นส่วนตัว', url: 'https://www.bedee.com/privacy-policy' }, // TODO: not migrated yet
+      { label: 'นโยบายความเป็นส่วนตัว', url: '/privacy-policy-th' },
     ],
   },
 ]
