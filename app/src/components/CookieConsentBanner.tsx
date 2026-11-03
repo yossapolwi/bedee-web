@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 const CONSENT_KEY = 'bedee-cookie-consent'
-const PRIVACY_POLICY_URL = '/privacy-policy'
+const PRIVACY_POLICY_URL = '/privacy-policy-th'
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false)

@@ -1,5 +1,7 @@
 import { withPayload } from '@payloadcms/next/withPayload'
 
+import { legalPageRedirects } from './legalPageRedirects.mjs'
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -16,6 +18,7 @@ const nextConfig = {
         destination: '/article/:category/:slug',
         permanent: true,
       },
+      ...legalPageRedirects,
     ]
   },
 }
