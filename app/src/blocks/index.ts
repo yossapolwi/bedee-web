@@ -364,6 +364,17 @@ export const PromoStripBlock: Block = {
   ],
 }
 
+export const IntroCtaBlock: Block = {
+  slug: 'introCta',
+  labels: { singular: 'Intro + CTA', plural: 'Intro + CTA' },
+  fields: [
+    { name: 'heading', type: 'text', required: true, localized: true },
+    { name: 'body', type: 'textarea', localized: true },
+    { name: 'ctaLabel', type: 'text', localized: true },
+    { name: 'ctaUrl', type: 'text' },
+  ],
+}
+
 // From revise-website.pptx slide 4 (image32/33.png, full-res) — "HOW IT
 // WORKS". A third distinct list treatment (after TrustChecklist's numbered
 // <ol> and FeatureSteps' icon cards): plain hairline-divided rows, no card
@@ -521,6 +532,7 @@ export const BlocksField = [
   FeatureStepsBlock,
   TrustChecklistBlock,
   PromoStripBlock,
+  IntroCtaBlock,
   StepsListBlock,
   TestimonialGridBlock,
   CredentialStripBlock,

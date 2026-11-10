@@ -13,6 +13,7 @@ import { ProductCarousel } from './components/ProductCarousel'
 import { FeatureSteps } from './components/FeatureSteps'
 import { TrustChecklist } from './components/TrustChecklist'
 import { PromoStrip } from './components/PromoStrip'
+import { IntroCta } from './components/IntroCta'
 import { StepsList } from './components/StepsList'
 import { TestimonialGrid } from './components/TestimonialGrid'
 import { CredentialStrip } from './components/CredentialStrip'
@@ -175,6 +176,16 @@ export async function RenderBlocks({
               key={i}
               icon={typeof block.icon === 'object' ? block.icon : null}
               kicker={block.kicker}
+              heading={block.heading}
+              body={block.body}
+              ctaLabel={block.ctaLabel}
+              ctaUrl={block.ctaUrl}
+            />
+          )
+        case 'introCta':
+          return (
+            <IntroCta
+              key={i}
               heading={block.heading}
               body={block.body}
               ctaLabel={block.ctaLabel}
