@@ -6,51 +6,52 @@ type Item = {
   description?: string | null
 }
 
-// From revise-website.pptx slide 1 (image4.png) — "ONE APP, COMPLETE CARE" —
-// and slide 2 (image21.png) — "TELEMEDICINE SERVICE", reusing this same
-// view/hover-only, icon-per-card shape with a dark variant rather than a
-// second near-duplicate block. No CTA on either variant — no link, no fake
-// "+" expand affordance the source screenshot implies but never resolves.
 export function FeatureSteps({
   kicker,
   heading,
   description,
   items,
   variant = 'light',
+  ctaLabel,
+  ctaUrl,
 }: {
   kicker?: string | null
   heading: string
   description?: string | null
   items: Item[]
   variant?: 'light' | 'dark' | null
+  ctaLabel?: string | null
+  ctaUrl?: string | null
 }) {
   if (!items?.length) return null
   const isDark = variant === 'dark'
-  // Matches IconGrid's own rule: 6 items balances into a clean 3x2 grid;
-  // fewer/other counts fill a single row instead.
   const cols = items.length === 6 ? 'lg:grid-cols-3' : 'lg:grid-cols-5'
+  const safeUrl = (url?: string | null) =>
+    url && /^(https?:|mailto:|tel:|\/)/i.test(url) ? url : undefined
+  const href = safeUrl(ctaUrl)
+  const isExternal = href?.startsWith('http')
 
   return (
     <section className={isDark ? 'bg-primary py-16' : 'bg-white py-16'}>
       <div className="mx-auto max-w-6xl px-6 md:px-12">
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <div>
-            {kicker && (
-              <p className={`text-sm font-semibold tracking-wide ${isDark ? 'text-white' : 'text-primary'}`}>
-                {kicker}
-              </p>
-            )}
-            <h2
-              className={`mt-2 whitespace-pre-line text-3xl font-semibold leading-tight md:text-4xl ${isDark ? 'text-white' : 'text-primary'}`}
-            >
-              {heading}
-            </h2>
-          </div>
-          {description && (
-            <p className={`max-w-sm text-base leading-relaxed md:text-right ${isDark ? 'text-white/80' : 'text-ink'}`}>
-              {description}
+        <div className="max-w-3xl">
+          {kicker && (
+            <p className={`text-sm font-semibold tracking-wide ${isDark ? 'text-white' : 'text-primary'}`}>
+              {kicker}
             </p>
           )}
+          <h2
+            className={`mt-2 whitespace-pre-line text-3xl font-semibold leading-tight md:text-4xl ${isDark ? 'text-white' : 'text-primary'}`}
+          >
+            {heading}
+          </h2>
+          {description ? (
+            <p
+              className={`mt-4 text-base font-medium leading-relaxed md:text-lg ${isDark ? 'text-white/80' : 'text-ink'}`}
+            >
+              {description}
+            </p>
+          ) : null}
         </div>
         <ul className={`mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 ${cols}`}>
           {items.map((item, i) => (
@@ -86,6 +87,17 @@ export function FeatureSteps({
             </li>
           ))}
         </ul>
+        {ctaLabel && href ? (
+          <a
+            href={href}
+            {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+            className={`mt-10 inline-block rounded-pill px-6 py-3 text-[15px] font-medium text-white transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:[box-shadow:0_0_0_3px_rgba(49,125,245,0.4)] ${
+              isDark ? 'bg-white text-primary' : 'bg-accent'
+            }`}
+          >
+            {ctaLabel}
+          </a>
+        ) : null}
       </div>
     </section>
   )

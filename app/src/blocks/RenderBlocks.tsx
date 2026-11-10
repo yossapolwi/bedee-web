@@ -144,6 +144,8 @@ export async function RenderBlocks({
               heading={block.heading}
               description={block.description}
               variant={block.variant}
+              ctaLabel={block.ctaLabel}
+              ctaUrl={block.ctaUrl}
               items={(block.items ?? []).map((item: any) => ({
                 icon: typeof item.icon === 'object' ? item.icon : { url: null, alt: null },
                 title: item.title,

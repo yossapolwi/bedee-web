@@ -290,6 +290,9 @@ export const FeatureStepsBlock: Block = {
         { name: 'description', type: 'textarea', localized: true },
       ],
     },
+    // Optional — telepharmacy "WHY BEDEE" instance adds an app deep link below the grid.
+    { name: 'ctaLabel', type: 'text', localized: true },
+    { name: 'ctaUrl', type: 'text' },
   ],
 }
 
