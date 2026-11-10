@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { renderInlineMarkdownLinks } from '@/lib/inlineMarkdownLinks'
 
 type CredentialItem = {
   image: { url?: string | null; alt?: string | null }
@@ -68,7 +69,14 @@ export function CredentialStrip({
       <div className="mx-auto max-w-5xl px-6 text-center">
         {kicker && <p className="text-sm font-semibold tracking-wide text-primary">{kicker}</p>}
         <h2 className="mt-2 text-[28px] font-semibold text-primary">{heading}</h2>
-        {body && <p className="mx-auto mt-3 max-w-2xl text-base leading-relaxed text-ink">{body}</p>}
+        {body ? (
+          <p className="mx-auto mt-3 max-w-2xl text-base leading-relaxed text-ink">
+            {renderInlineMarkdownLinks(
+              body,
+              'font-medium text-secondary underline-offset-2 hover:underline focus-visible:outline-none focus-visible:[box-shadow:0_0_0_3px_rgba(49,125,245,0.4)]',
+            )}
+          </p>
+        ) : null}
         <ul className="mt-10 flex flex-wrap items-start justify-center gap-x-10 gap-y-10">
           {items.map((item, i) => {
             const link = safeUrl(item.certificateUrl)
