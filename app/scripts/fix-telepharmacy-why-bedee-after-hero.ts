@@ -4,9 +4,6 @@ import config from '../src/payload.config'
 const HEADING = 'ทำไมต้องใช้แอปให้คำแนะนำสั่งยาออนไลน์โดยเภสัชจาก BeDee'
 const DESCRIPTION =
   'BeDee by BDMS ให้บริการเภสัชกรรมทางไกล (Telepharmacy) ผ่านแอปพลิเคชัน เชื่อมคุณกับเภสัชกรเพื่อประเมินความเหมาะสมก่อนจ่ายยา พร้อมแนะนำวิธีใช้และจัดส่งถึงบ้าน เหมาะสำหรับผู้ที่ต้องการสั่งยาออนไลน์โดยมีผู้เชี่ยวชาญให้คำปรึกษา'
-const CTA_URL = 'https://get.bedee.com/iQMa/c6f0ia4w'
-const CTA_LABEL = 'ตรวจสอบสิทธิในแอป'
-
 const ICON_BY_TITLE: Record<string, string> = {
   'สะดวกและรวดเร็ว': 'icon-tp-fast-delivery.png',
   'รับยาได้หลายรูปแบบ': 'icon-tp-submit-info.png',
@@ -90,8 +87,8 @@ block.variant = 'light'
 block.kicker = null
 block.heading = HEADING
 block.description = DESCRIPTION
-block.ctaLabel = CTA_LABEL
-block.ctaUrl = CTA_URL
+block.ctaLabel = null
+block.ctaUrl = null
 block.items = ITEMS.map((item) => ({
   ...item,
   icon: iconIds[item.title],
