@@ -184,6 +184,15 @@ export const ImageCarouselBlock: Block = {
   fields: [
     { name: 'heading', type: 'text', localized: true },
     {
+      name: 'variant',
+      type: 'select',
+      defaultValue: 'plain',
+      options: [
+        { label: 'White / transparent', value: 'plain' },
+        { label: 'Light blue band', value: 'tinted' },
+      ],
+    },
+    {
       name: 'images',
       type: 'array',
       minRows: 1,
@@ -221,6 +230,15 @@ export const RichTextContentBlock: Block = {
   labels: { singular: 'Rich Text Content', plural: 'Rich Text Content' },
   fields: [
     { name: 'heading', type: 'text', localized: true },
+    {
+      name: 'variant',
+      type: 'select',
+      defaultValue: 'plain',
+      options: [
+        { label: 'White / transparent', value: 'plain' },
+        { label: 'Light blue band', value: 'tinted' },
+      ],
+    },
     {
       name: 'content',
       type: 'richText',
@@ -306,6 +324,15 @@ export const TrustChecklistBlock: Block = {
   slug: 'trustChecklist',
   labels: { singular: 'Trust Checklist', plural: 'Trust Checklists' },
   fields: [
+    {
+      name: 'backgroundVariant',
+      type: 'select',
+      defaultValue: 'tinted',
+      options: [
+        { label: 'Tinted (panel)', value: 'tinted' },
+        { label: 'White', value: 'plain' },
+      ],
+    },
     { name: 'kicker', type: 'text', localized: true },
     { name: 'heading', type: 'text', required: true, localized: true },
     { name: 'body', type: 'textarea', localized: true },

@@ -25,6 +25,7 @@ export function TrustChecklist({
   imageBadgeLabel,
   imageBadgeSub,
   items,
+  backgroundVariant = 'tinted',
   ctaVariant = 'outline',
   ctaLabel,
   ctaUrl,
@@ -35,6 +36,7 @@ export function TrustChecklist({
   kicker?: string | null
   heading: string
   body?: string | null
+  backgroundVariant?: 'plain' | 'tinted' | null
   image: { url?: string | null; alt?: string | null; width?: number | null; height?: number | null }
   imageBadgeLabel?: string | null
   imageBadgeSub?: string | null
@@ -55,8 +57,10 @@ export function TrustChecklist({
   // neutral backdrop instead.
   const isPortrait = Boolean(image?.width && image?.height && image.height > image.width)
 
+  const sectionBg = backgroundVariant === 'plain' ? 'bg-white' : 'bg-panel-1'
+
   return (
-    <section className="bg-panel-1 py-16">
+    <section className={`${sectionBg} py-16`}>
       <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6 md:flex-row md:items-center md:px-12">
         <div className={`relative flex-1 ${isPortrait ? 'flex justify-center rounded-[28px] bg-panel-2 py-8' : ''}`}>
           {image?.url && (

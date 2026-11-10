@@ -98,7 +98,7 @@ export async function RenderBlocks({
           const images = (block.images ?? []).map((item: any) =>
             typeof item.image === 'object' ? item.image : { url: null, alt: null },
           )
-          return <ImageCarousel key={i} heading={block.heading} images={images} />
+          return <ImageCarousel key={i} heading={block.heading} images={images} variant={block.variant} />
         }
         case 'promotionGrid': {
           const promos = (block.promotions ?? []).filter(
@@ -120,7 +120,9 @@ export async function RenderBlocks({
           )
         }
         case 'richTextContent':
-          return <RichTextContent key={i} heading={block.heading} content={block.content} />
+          return (
+            <RichTextContent key={i} heading={block.heading} content={block.content} variant={block.variant} />
+          )
         case 'faq':
           return <FAQ key={i} heading={block.heading} items={block.items ?? []} variant={block.variant} />
         case 'faqIndex':
@@ -164,6 +166,7 @@ export async function RenderBlocks({
               imageBadgeLabel={block.imageBadgeLabel}
               imageBadgeSub={block.imageBadgeSub}
               items={block.items ?? []}
+              backgroundVariant={block.backgroundVariant}
               ctaVariant={block.ctaVariant}
               ctaLabel={block.ctaLabel}
               ctaUrl={block.ctaUrl}

@@ -39,6 +39,7 @@ import * as migration_20260918_232731_add_trust_checklist_item_icon_and_disclaim
 import * as migration_20260920_221211_add_faq_background_variant from './20260920_221211_add_faq_background_variant';
 import * as migration_20261109_093000_add_intro_cta_block from './20261109_093000_add_intro_cta_block';
 import * as migration_20261110_210000_add_feature_steps_cta from './20261110_210000_add_feature_steps_cta';
+import * as migration_20261110_212500_block_section_background_variants from './20261110_212500_block_section_background_variants';
 
 export const migrations = [
   {
@@ -245,5 +246,10 @@ export const migrations = [
     up: migration_20261110_210000_add_feature_steps_cta.up,
     down: migration_20261110_210000_add_feature_steps_cta.down,
     name: '20261110_210000_add_feature_steps_cta',
+  },
+  {
+    up: migration_20261110_212500_block_section_background_variants.up,
+    down: migration_20261110_212500_block_section_background_variants.down,
+    name: '20261110_212500_block_section_background_variants',
   },
 ];
