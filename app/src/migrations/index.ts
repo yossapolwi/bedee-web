@@ -37,6 +37,15 @@ import * as migration_20260825_232901_add_faq_item_steps from './20260825_232901
 import * as migration_20260918_191645_add_hero_carousel_badge_checklist_floating_cards from './20260918_191645_add_hero_carousel_badge_checklist_floating_cards';
 import * as migration_20260918_232731_add_trust_checklist_item_icon_and_disclaimer from './20260918_232731_add_trust_checklist_item_icon_and_disclaimer';
 import * as migration_20260920_221211_add_faq_background_variant from './20260920_221211_add_faq_background_variant';
+import * as migration_20261109_093000_add_intro_cta_block from './20261109_093000_add_intro_cta_block';
+import * as migration_20261110_210000_add_feature_steps_cta from './20261110_210000_add_feature_steps_cta';
+import * as migration_20261110_212500_block_section_background_variants from './20261110_212500_block_section_background_variants';
+import * as migration_20261110_214100_trust_checklist_image_side from './20261110_214100_trust_checklist_image_side';
+import * as migration_20261110_221300_article_grid_pinned_posts from './20261110_221300_article_grid_pinned_posts';
+import * as migration_20261110_222100_expert_tabs_background_variant from './20261110_222100_expert_tabs_background_variant';
+import * as migration_20261110_223000_expert_tabs_light_blue_variant from './20261110_223000_expert_tabs_light_blue_variant';
+import * as migration_20261110_223500_feature_steps_tinted_variant from './20261110_223500_feature_steps_tinted_variant';
+import * as migration_20261110_224200_trust_checklist_light_blue_bg from './20261110_224200_trust_checklist_light_blue_bg';
 
 export const migrations = [
   {
@@ -232,6 +241,51 @@ export const migrations = [
   {
     up: migration_20260920_221211_add_faq_background_variant.up,
     down: migration_20260920_221211_add_faq_background_variant.down,
-    name: '20260920_221211_add_faq_background_variant'
+    name: '20260920_221211_add_faq_background_variant',
+  },
+  {
+    up: migration_20261109_093000_add_intro_cta_block.up,
+    down: migration_20261109_093000_add_intro_cta_block.down,
+    name: '20261109_093000_add_intro_cta_block',
+  },
+  {
+    up: migration_20261110_210000_add_feature_steps_cta.up,
+    down: migration_20261110_210000_add_feature_steps_cta.down,
+    name: '20261110_210000_add_feature_steps_cta',
+  },
+  {
+    up: migration_20261110_212500_block_section_background_variants.up,
+    down: migration_20261110_212500_block_section_background_variants.down,
+    name: '20261110_212500_block_section_background_variants',
+  },
+  {
+    up: migration_20261110_214100_trust_checklist_image_side.up,
+    down: migration_20261110_214100_trust_checklist_image_side.down,
+    name: '20261110_214100_trust_checklist_image_side',
+  },
+  {
+    up: migration_20261110_221300_article_grid_pinned_posts.up,
+    down: migration_20261110_221300_article_grid_pinned_posts.down,
+    name: '20261110_221300_article_grid_pinned_posts',
+  },
+  {
+    up: migration_20261110_222100_expert_tabs_background_variant.up,
+    down: migration_20261110_222100_expert_tabs_background_variant.down,
+    name: '20261110_222100_expert_tabs_background_variant',
+  },
+  {
+    up: migration_20261110_223000_expert_tabs_light_blue_variant.up,
+    down: migration_20261110_223000_expert_tabs_light_blue_variant.down,
+    name: '20261110_223000_expert_tabs_light_blue_variant',
+  },
+  {
+    up: migration_20261110_223500_feature_steps_tinted_variant.up,
+    down: migration_20261110_223500_feature_steps_tinted_variant.down,
+    name: '20261110_223500_feature_steps_tinted_variant',
+  },
+  {
+    up: migration_20261110_224200_trust_checklist_light_blue_bg.up,
+    down: migration_20261110_224200_trust_checklist_light_blue_bg.down,
+    name: '20261110_224200_trust_checklist_light_blue_bg',
   },
 ];

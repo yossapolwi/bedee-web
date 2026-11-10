@@ -1,5 +1,7 @@
 import Image from 'next/image'
 
+const LIGHT_BLUE_BAND = 'bg-gradient-to-br from-[#EAF4FF] to-[#CFE7FF]'
+
 type Item = {
   icon?: { url?: string | null; alt?: string | null } | null
   title: string
@@ -25,6 +27,8 @@ export function TrustChecklist({
   imageBadgeLabel,
   imageBadgeSub,
   items,
+  backgroundVariant = 'tinted',
+  imageSide = 'left',
   ctaVariant = 'outline',
   ctaLabel,
   ctaUrl,
@@ -35,6 +39,8 @@ export function TrustChecklist({
   kicker?: string | null
   heading: string
   body?: string | null
+  backgroundVariant?: 'plain' | 'tinted' | 'lightBlue' | null
+  imageSide?: 'left' | 'right' | null
   image: { url?: string | null; alt?: string | null; width?: number | null; height?: number | null }
   imageBadgeLabel?: string | null
   imageBadgeSub?: string | null
@@ -55,9 +61,20 @@ export function TrustChecklist({
   // neutral backdrop instead.
   const isPortrait = Boolean(image?.width && image?.height && image.height > image.width)
 
+  const sectionBg =
+    backgroundVariant === 'plain'
+      ? 'bg-white'
+      : backgroundVariant === 'lightBlue'
+        ? LIGHT_BLUE_BAND
+        : 'bg-panel-1'
+
   return (
-    <section className="bg-panel-1 py-16">
-      <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6 md:flex-row md:items-center md:px-12">
+    <section className={`${sectionBg} py-16`}>
+      <div
+        className={`mx-auto flex max-w-6xl flex-col gap-12 px-6 md:items-center md:px-12 ${
+          imageSide === 'right' ? 'md:flex-row-reverse' : 'md:flex-row'
+        }`}
+      >
         <div className={`relative flex-1 ${isPortrait ? 'flex justify-center rounded-[28px] bg-panel-2 py-8' : ''}`}>
           {image?.url && (
             <Image

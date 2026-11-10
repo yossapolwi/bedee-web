@@ -1,63 +1,73 @@
 import Image from 'next/image'
 
+const LIGHT_BLUE_BAND = 'bg-gradient-to-br from-[#EAF4FF] to-[#CFE7FF]'
+
 type Item = {
   icon: { url?: string | null; alt?: string | null }
   title: string
   description?: string | null
 }
 
-// From revise-website.pptx slide 1 (image4.png) — "ONE APP, COMPLETE CARE" —
-// and slide 2 (image21.png) — "TELEMEDICINE SERVICE", reusing this same
-// view/hover-only, icon-per-card shape with a dark variant rather than a
-// second near-duplicate block. No CTA on either variant — no link, no fake
-// "+" expand affordance the source screenshot implies but never resolves.
 export function FeatureSteps({
   kicker,
   heading,
   description,
   items,
   variant = 'light',
+  ctaLabel,
+  ctaUrl,
 }: {
   kicker?: string | null
   heading: string
   description?: string | null
   items: Item[]
-  variant?: 'light' | 'dark' | null
+  variant?: 'light' | 'tinted' | 'dark' | null
+  ctaLabel?: string | null
+  ctaUrl?: string | null
 }) {
   if (!items?.length) return null
   const isDark = variant === 'dark'
-  // Matches IconGrid's own rule: 6 items balances into a clean 3x2 grid;
-  // fewer/other counts fill a single row instead.
+  const isTinted = variant === 'tinted'
   const cols = items.length === 6 ? 'lg:grid-cols-3' : 'lg:grid-cols-5'
+  const safeUrl = (url?: string | null) =>
+    url && /^(https?:|mailto:|tel:|\/)/i.test(url) ? url : undefined
+  const href = safeUrl(ctaUrl)
+  const isExternal = href?.startsWith('http')
+
+  const sectionClass = isDark ? 'bg-primary py-16' : isTinted ? `${LIGHT_BLUE_BAND} py-16` : 'bg-white py-16'
 
   return (
-    <section className={isDark ? 'bg-primary py-16' : 'bg-white py-16'}>
+    <section className={sectionClass}>
       <div className="mx-auto max-w-6xl px-6 md:px-12">
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <div>
-            {kicker && (
-              <p className={`text-sm font-semibold tracking-wide ${isDark ? 'text-white' : 'text-primary'}`}>
-                {kicker}
-              </p>
-            )}
-            <h2
-              className={`mt-2 whitespace-pre-line text-3xl font-semibold leading-tight md:text-4xl ${isDark ? 'text-white' : 'text-primary'}`}
+        <header className="w-full text-left">
+          {kicker ? (
+            <p className={`text-sm font-semibold tracking-wide ${isDark ? 'text-white/90' : 'text-primary'}`}>
+              {kicker}
+            </p>
+          ) : null}
+          <h2
+            className={`${kicker ? 'mt-2' : ''} max-w-4xl whitespace-pre-line text-3xl font-semibold leading-tight md:text-[40px] md:leading-[1.15] ${isDark ? 'text-white' : 'text-primary'}`}
+          >
+            {heading}
+          </h2>
+          {description ? (
+            <p
+              className={`mt-5 max-w-3xl text-lg font-medium leading-relaxed md:mt-6 ${isDark ? 'text-white/85' : 'text-ink'}`}
             >
-              {heading}
-            </h2>
-          </div>
-          {description && (
-            <p className={`max-w-sm text-base leading-relaxed md:text-right ${isDark ? 'text-white/80' : 'text-ink'}`}>
               {description}
             </p>
-          )}
-        </div>
+          ) : null}
+        </header>
         <ul className={`mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 ${cols}`}>
           {items.map((item, i) => (
             <li
               key={i}
               className={`group relative overflow-hidden p-6 transition-colors duration-200 ease-out ${
-                isDark ? 'bg-white/10 hover:bg-white/15' : 'bg-panel-1 hover:bg-[#EAF1FF]'
+                isDark
+                  ? 'bg-white/10 hover:bg-white/15'
+                  : isTinted
+                    ? 'bg-white hover:bg-white/95'
+                    : 'bg-panel-1 hover:bg-[#EAF1FF]'
               }`}
             >
               <div
@@ -86,6 +96,17 @@ export function FeatureSteps({
             </li>
           ))}
         </ul>
+        {ctaLabel && href ? (
+          <a
+            href={href}
+            {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+            className={`mt-10 inline-block rounded-pill px-6 py-3 text-[15px] font-medium text-white transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:[box-shadow:0_0_0_3px_rgba(49,125,245,0.4)] ${
+              isDark ? 'bg-white text-primary' : 'bg-accent'
+            }`}
+          >
+            {ctaLabel}
+          </a>
+        ) : null}
       </div>
     </section>
   )

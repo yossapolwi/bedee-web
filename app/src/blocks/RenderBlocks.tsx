@@ -13,6 +13,7 @@ import { ProductCarousel } from './components/ProductCarousel'
 import { FeatureSteps } from './components/FeatureSteps'
 import { TrustChecklist } from './components/TrustChecklist'
 import { PromoStrip } from './components/PromoStrip'
+import { IntroCta } from './components/IntroCta'
 import { StepsList } from './components/StepsList'
 import { TestimonialGrid } from './components/TestimonialGrid'
 import { CredentialStrip } from './components/CredentialStrip'
@@ -61,6 +62,7 @@ export async function RenderBlocks({
               heading={block.heading}
               doctors={block.doctors ?? []}
               defaultRole={block.defaultRole}
+              backgroundVariant={block.backgroundVariant}
             />
           )
         case 'promoBanner':
@@ -82,6 +84,24 @@ export async function RenderBlocks({
             />
           )
         case 'articleGrid': {
+          const pinnedIds = (block.posts ?? [])
+            .map((p: { id?: number } | number) => (typeof p === 'object' && p ? p.id : p))
+            .filter((id: unknown): id is number => typeof id === 'number')
+
+          if (pinnedIds.length > 0) {
+            const pinned = await payload.find({
+              collection: 'posts',
+              where: { id: { in: pinnedIds } },
+              depth: 2,
+              limit: pinnedIds.length,
+            })
+            const byId = new Map(pinned.docs.map((doc) => [doc.id, doc]))
+            const ordered = pinnedIds.map((id: number) => byId.get(id)).filter(Boolean)
+            return (
+              <ArticleGrid key={i} heading={block.heading} posts={ordered as any} variant={block.variant} />
+            )
+          }
+
           const result = await payload.find({
             collection: 'posts',
             limit: block.postCount ?? 3,
@@ -97,7 +117,7 @@ export async function RenderBlocks({
           const images = (block.images ?? []).map((item: any) =>
             typeof item.image === 'object' ? item.image : { url: null, alt: null },
           )
-          return <ImageCarousel key={i} heading={block.heading} images={images} />
+          return <ImageCarousel key={i} heading={block.heading} images={images} variant={block.variant} />
         }
         case 'promotionGrid': {
           const promos = (block.promotions ?? []).filter(
@@ -119,7 +139,9 @@ export async function RenderBlocks({
           )
         }
         case 'richTextContent':
-          return <RichTextContent key={i} heading={block.heading} content={block.content} />
+          return (
+            <RichTextContent key={i} heading={block.heading} content={block.content} variant={block.variant} />
+          )
         case 'faq':
           return <FAQ key={i} heading={block.heading} items={block.items ?? []} variant={block.variant} />
         case 'faqIndex':
@@ -143,6 +165,8 @@ export async function RenderBlocks({
               heading={block.heading}
               description={block.description}
               variant={block.variant}
+              ctaLabel={block.ctaLabel}
+              ctaUrl={block.ctaUrl}
               items={(block.items ?? []).map((item: any) => ({
                 icon: typeof item.icon === 'object' ? item.icon : { url: null, alt: null },
                 title: item.title,
@@ -161,6 +185,8 @@ export async function RenderBlocks({
               imageBadgeLabel={block.imageBadgeLabel}
               imageBadgeSub={block.imageBadgeSub}
               items={block.items ?? []}
+              backgroundVariant={block.backgroundVariant}
+              imageSide={block.imageSide}
               ctaVariant={block.ctaVariant}
               ctaLabel={block.ctaLabel}
               ctaUrl={block.ctaUrl}
@@ -175,6 +201,16 @@ export async function RenderBlocks({
               key={i}
               icon={typeof block.icon === 'object' ? block.icon : null}
               kicker={block.kicker}
+              heading={block.heading}
+              body={block.body}
+              ctaLabel={block.ctaLabel}
+              ctaUrl={block.ctaUrl}
+            />
+          )
+        case 'introCta':
+          return (
+            <IntroCta
+              key={i}
               heading={block.heading}
               body={block.body}
               ctaLabel={block.ctaLabel}

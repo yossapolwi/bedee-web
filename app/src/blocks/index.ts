@@ -106,6 +106,16 @@ export const ExpertTabsBlock: Block = {
   slug: 'expertTabs',
   labels: { singular: 'Expert Tabs', plural: 'Expert Tabs' },
   fields: [
+    {
+      name: 'backgroundVariant',
+      type: 'select',
+      defaultValue: 'tinted',
+      options: [
+        { label: 'Tinted (panel)', value: 'tinted' },
+        { label: 'White', value: 'plain' },
+        { label: 'Light blue band', value: 'lightBlue' },
+      ],
+    },
     { name: 'heading', type: 'text', localized: true },
     { name: 'doctors', type: 'relationship', relationTo: 'doctors', hasMany: true },
     {
@@ -162,6 +172,9 @@ export const ArticleGridBlock: Block = {
   fields: [
     { name: 'heading', type: 'text', localized: true },
     { name: 'postCount', type: 'number', defaultValue: 3 },
+    // Optional — when set, these posts are shown in this order instead of
+    // the category/latest fallback below.
+    { name: 'posts', type: 'relationship', relationTo: 'posts', hasMany: true },
     // Optional — omit to keep the existing "latest across the whole site"
     // behavior. Set to pin a specific category's latest posts instead (e.g.
     // a service page's "related articles" section).
@@ -183,6 +196,15 @@ export const ImageCarouselBlock: Block = {
   labels: { singular: 'Image Carousel', plural: 'Image Carousels' },
   fields: [
     { name: 'heading', type: 'text', localized: true },
+    {
+      name: 'variant',
+      type: 'select',
+      defaultValue: 'plain',
+      options: [
+        { label: 'White / transparent', value: 'plain' },
+        { label: 'Light blue band', value: 'tinted' },
+      ],
+    },
     {
       name: 'images',
       type: 'array',
@@ -221,6 +243,15 @@ export const RichTextContentBlock: Block = {
   labels: { singular: 'Rich Text Content', plural: 'Rich Text Content' },
   fields: [
     { name: 'heading', type: 'text', localized: true },
+    {
+      name: 'variant',
+      type: 'select',
+      defaultValue: 'plain',
+      options: [
+        { label: 'White / transparent', value: 'plain' },
+        { label: 'Light blue band', value: 'tinted' },
+      ],
+    },
     {
       name: 'content',
       type: 'richText',
@@ -274,6 +305,7 @@ export const FeatureStepsBlock: Block = {
       defaultValue: 'light',
       options: [
         { label: 'Light (white bg, navy text) — homepage default', value: 'light' },
+        { label: 'Light blue band', value: 'tinted' },
         { label: 'Dark (navy bg, white text)', value: 'dark' },
       ],
     },
@@ -290,6 +322,9 @@ export const FeatureStepsBlock: Block = {
         { name: 'description', type: 'textarea', localized: true },
       ],
     },
+    // Optional — telepharmacy "WHY BEDEE" instance adds an app deep link below the grid.
+    { name: 'ctaLabel', type: 'text', localized: true },
+    { name: 'ctaUrl', type: 'text' },
   ],
 }
 
@@ -303,6 +338,25 @@ export const TrustChecklistBlock: Block = {
   slug: 'trustChecklist',
   labels: { singular: 'Trust Checklist', plural: 'Trust Checklists' },
   fields: [
+    {
+      name: 'backgroundVariant',
+      type: 'select',
+      defaultValue: 'tinted',
+      options: [
+        { label: 'Tinted (panel)', value: 'tinted' },
+        { label: 'White', value: 'plain' },
+        { label: 'Light blue band', value: 'lightBlue' },
+      ],
+    },
+    {
+      name: 'imageSide',
+      type: 'select',
+      defaultValue: 'left',
+      options: [
+        { label: 'Image left, text right', value: 'left' },
+        { label: 'Text left, image right', value: 'right' },
+      ],
+    },
     { name: 'kicker', type: 'text', localized: true },
     { name: 'heading', type: 'text', required: true, localized: true },
     { name: 'body', type: 'textarea', localized: true },
@@ -357,6 +411,17 @@ export const PromoStripBlock: Block = {
   fields: [
     { name: 'icon', type: 'upload', relationTo: 'media' },
     { name: 'kicker', type: 'text', localized: true },
+    { name: 'heading', type: 'text', required: true, localized: true },
+    { name: 'body', type: 'textarea', localized: true },
+    { name: 'ctaLabel', type: 'text', localized: true },
+    { name: 'ctaUrl', type: 'text' },
+  ],
+}
+
+export const IntroCtaBlock: Block = {
+  slug: 'introCta',
+  labels: { singular: 'Intro + CTA', plural: 'Intro + CTA' },
+  fields: [
     { name: 'heading', type: 'text', required: true, localized: true },
     { name: 'body', type: 'textarea', localized: true },
     { name: 'ctaLabel', type: 'text', localized: true },
@@ -521,6 +586,7 @@ export const BlocksField = [
   FeatureStepsBlock,
   TrustChecklistBlock,
   PromoStripBlock,
+  IntroCtaBlock,
   StepsListBlock,
   TestimonialGridBlock,
   CredentialStripBlock,

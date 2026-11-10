@@ -23,12 +23,16 @@ function usePrefersReducedMotion() {
 // pause_on_interaction: "yes", infinite: "yes", transition: "slide",
 // transition_speed: 500 }. "pause_on_interaction: yes" means autoplay stops
 // for good the first time someone manually navigates — not paused-then-resumed.
+const LIGHT_BLUE_BAND = 'bg-gradient-to-br from-[#EAF4FF] to-[#CFE7FF]'
+
 export function ImageCarousel({
   heading,
   images,
+  variant = 'plain',
 }: {
   heading?: string | null
   images: CarouselImage[]
+  variant?: 'plain' | 'tinted' | null
 }) {
   const [index, setIndex] = useState(0)
   const [autoplayStopped, setAutoplayStopped] = useState(false)
@@ -51,8 +55,8 @@ export function ImageCarousel({
     setIndex((i + images.length) % images.length)
   }
 
-  return (
-    <div className="mx-auto max-w-5xl px-6 py-8">
+  const inner = (
+    <div className="mx-auto max-w-5xl px-6">
       {heading ? <h2 className="mb-6 text-2xl font-semibold text-[#081F7C]">{heading}</h2> : null}
       <div
         className="relative overflow-hidden"
@@ -113,4 +117,10 @@ export function ImageCarousel({
       )}
     </div>
   )
+
+  if (variant === 'tinted') {
+    return <section className={`${LIGHT_BLUE_BAND} pb-12 pt-4`}>{inner}</section>
+  }
+
+  return <section className="py-8">{inner}</section>
 }

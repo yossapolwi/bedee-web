@@ -1,3 +1,5 @@
+import { SERVICE_LANDING_SLUGS, isServiceLandingSlug } from '@/lib/serviceLandingSchema'
+import { SERVICE_LLMS_BULLETS } from '@/lib/serviceLlmsCopy'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
@@ -13,10 +15,9 @@ export async function GET() {
   // health-mall, health-plaza) live in `pages`, not a separate `services`
   // collection (that one's unused/empty) — query by their known slugs so
   // this section reflects the actual live routes, titles pulled from the CMS.
-  const SERVICE_SLUGS = ['teleconsultation', 'telepharmacy', 'health-mall', 'health-plaza']
   const [settings, servicePages, posts, news] = await Promise.all([
     payload.findGlobal({ slug: 'site-settings' }),
-    payload.find({ collection: 'pages', where: { slug: { in: SERVICE_SLUGS } }, limit: 20 }),
+    payload.find({ collection: 'pages', where: { slug: { in: [...SERVICE_LANDING_SLUGS] } }, limit: 20 }),
     payload.find({ collection: 'posts', limit: 10, sort: '-publishedAt', depth: 1 }),
     payload.find({ collection: 'news-and-activities', limit: 10, sort: '-publishedAt' }),
   ])
@@ -36,12 +37,23 @@ export async function GET() {
 
   if (servicePages.docs.length) {
     lines.push('\n## Services')
-    // Preserve the intended nav order rather than whatever order Postgres
-    // happens to return an `in` query in.
     const bySlug = new Map(servicePages.docs.map((p) => [p.slug, p]))
-    for (const slug of SERVICE_SLUGS) {
+    for (const slug of SERVICE_LANDING_SLUGS) {
       const page = bySlug.get(slug)
-      if (page) lines.push(`- [${page.title}](/${slug})`)
+      if (!page) continue
+      const updated = page.updatedAt
+        ? new Date(page.updatedAt).toISOString().slice(0, 10)
+        : ''
+      lines.push(`\n### ${page.title} (/${slug})${updated ? ` — updated ${updated}` : ''}`)
+      lines.push(`- [${page.title}](/${slug})`)
+      if (page.seo?.metaDescription) {
+        lines.push(`- ${page.seo.metaDescription}`)
+      }
+      if (isServiceLandingSlug(slug)) {
+        for (const bullet of SERVICE_LLMS_BULLETS[slug]) {
+          lines.push(`- ${bullet}`)
+        }
+      }
     }
   }
 

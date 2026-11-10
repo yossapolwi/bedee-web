@@ -12,6 +12,12 @@ import { SiteHeader } from '@/components/SiteHeader'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { extractHowToSchemas } from '@/lib/howToSchema'
 import { extractProductListSchemas } from '@/lib/productSchema'
+import {
+  buildServiceLandingBreadcrumbJsonLd,
+  buildServiceLandingJsonLd,
+  enrichWebPageForServiceLanding,
+  isServiceLandingSlug,
+} from '@/lib/serviceLandingSchema'
 import { SITE_URL } from '@/lib/siteUrl'
 
 export const dynamic = 'force-dynamic'
@@ -105,7 +111,7 @@ export default async function ContentPage({ params }: { params: Promise<Params> 
 
   if (!content) notFound()
 
-  const jsonLd = {
+  let jsonLd: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: content.doc.title,
@@ -115,6 +121,17 @@ export default async function ContentPage({ params }: { params: Promise<Params> 
     // content loses to dated content in citation ranking (ai-seo skill).
     dateModified: content.doc.updatedAt,
     publisher: { '@type': 'Organization', name: 'BeDee' },
+  }
+  const serviceLandingSchema =
+    content.type === 'page' && isServiceLandingSlug(slug)
+      ? buildServiceLandingJsonLd(slug, content.doc)
+      : null
+  const breadcrumbSchema =
+    content.type === 'page' && isServiceLandingSlug(slug)
+      ? buildServiceLandingBreadcrumbJsonLd(slug, content.doc.title)
+      : null
+  if (serviceLandingSchema && isServiceLandingSlug(slug)) {
+    jsonLd = enrichWebPageForServiceLanding(jsonLd, slug)
   }
   const howToSchemas =
     content.type === 'page' ? extractHowToSchemas((content.doc.layout ?? []) as any[]) : [] // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -128,6 +145,22 @@ export default async function ContentPage({ params }: { params: Promise<Params> 
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
       />
+      {serviceLandingSchema ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(serviceLandingSchema).replace(/</g, '\\u003c'),
+          }}
+        />
+      ) : null}
+      {breadcrumbSchema ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(breadcrumbSchema).replace(/</g, '\\u003c'),
+          }}
+        />
+      ) : null}
       {howToSchemas.map((schema, i) => (
         <script
           key={`howto-${i}`}
