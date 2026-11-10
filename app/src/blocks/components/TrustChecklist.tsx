@@ -26,6 +26,7 @@ export function TrustChecklist({
   imageBadgeSub,
   items,
   backgroundVariant = 'tinted',
+  imageSide = 'left',
   ctaVariant = 'outline',
   ctaLabel,
   ctaUrl,
@@ -37,6 +38,7 @@ export function TrustChecklist({
   heading: string
   body?: string | null
   backgroundVariant?: 'plain' | 'tinted' | null
+  imageSide?: 'left' | 'right' | null
   image: { url?: string | null; alt?: string | null; width?: number | null; height?: number | null }
   imageBadgeLabel?: string | null
   imageBadgeSub?: string | null
@@ -61,7 +63,11 @@ export function TrustChecklist({
 
   return (
     <section className={`${sectionBg} py-16`}>
-      <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6 md:flex-row md:items-center md:px-12">
+      <div
+        className={`mx-auto flex max-w-6xl flex-col gap-12 px-6 md:items-center md:px-12 ${
+          imageSide === 'right' ? 'md:flex-row-reverse' : 'md:flex-row'
+        }`}
+      >
         <div className={`relative flex-1 ${isPortrait ? 'flex justify-center rounded-[28px] bg-panel-2 py-8' : ''}`}>
           {image?.url && (
             <Image

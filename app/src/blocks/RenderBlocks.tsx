@@ -167,6 +167,7 @@ export async function RenderBlocks({
               imageBadgeSub={block.imageBadgeSub}
               items={block.items ?? []}
               backgroundVariant={block.backgroundVariant}
+              imageSide={block.imageSide}
               ctaVariant={block.ctaVariant}
               ctaLabel={block.ctaLabel}
               ctaUrl={block.ctaUrl}

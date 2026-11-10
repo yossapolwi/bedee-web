@@ -333,6 +333,15 @@ export const TrustChecklistBlock: Block = {
         { label: 'White', value: 'plain' },
       ],
     },
+    {
+      name: 'imageSide',
+      type: 'select',
+      defaultValue: 'left',
+      options: [
+        { label: 'Image left, text right', value: 'left' },
+        { label: 'Text left, image right', value: 'right' },
+      ],
+    },
     { name: 'kicker', type: 'text', localized: true },
     { name: 'heading', type: 'text', required: true, localized: true },
     { name: 'body', type: 'textarea', localized: true },
