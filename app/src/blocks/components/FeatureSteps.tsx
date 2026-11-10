@@ -34,25 +34,25 @@ export function FeatureSteps({
   return (
     <section className={isDark ? 'bg-primary py-16' : 'bg-white py-16'}>
       <div className="mx-auto max-w-6xl px-6 md:px-12">
-        <div className="max-w-3xl">
-          {kicker && (
-            <p className={`text-sm font-semibold tracking-wide ${isDark ? 'text-white' : 'text-primary'}`}>
+        <header className="w-full text-left">
+          {kicker ? (
+            <p className={`text-sm font-semibold tracking-wide ${isDark ? 'text-white/90' : 'text-primary'}`}>
               {kicker}
             </p>
-          )}
+          ) : null}
           <h2
-            className={`mt-2 whitespace-pre-line text-3xl font-semibold leading-tight md:text-4xl ${isDark ? 'text-white' : 'text-primary'}`}
+            className={`${kicker ? 'mt-2' : ''} max-w-4xl whitespace-pre-line text-3xl font-semibold leading-tight md:text-[40px] md:leading-[1.15] ${isDark ? 'text-white' : 'text-primary'}`}
           >
             {heading}
           </h2>
           {description ? (
             <p
-              className={`mt-4 text-base font-medium leading-relaxed md:text-lg ${isDark ? 'text-white/80' : 'text-ink'}`}
+              className={`mt-5 max-w-3xl text-lg font-medium leading-relaxed md:mt-6 ${isDark ? 'text-white/85' : 'text-ink'}`}
             >
               {description}
             </p>
           ) : null}
-        </div>
+        </header>
         <ul className={`mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 ${cols}`}>
           {items.map((item, i) => (
             <li
