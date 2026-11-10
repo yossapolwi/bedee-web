@@ -1,5 +1,7 @@
 import Image from 'next/image'
 
+const LIGHT_BLUE_BAND = 'bg-gradient-to-br from-[#EAF4FF] to-[#CFE7FF]'
+
 type Item = {
   icon?: { url?: string | null; alt?: string | null } | null
   title: string
@@ -37,7 +39,7 @@ export function TrustChecklist({
   kicker?: string | null
   heading: string
   body?: string | null
-  backgroundVariant?: 'plain' | 'tinted' | null
+  backgroundVariant?: 'plain' | 'tinted' | 'lightBlue' | null
   imageSide?: 'left' | 'right' | null
   image: { url?: string | null; alt?: string | null; width?: number | null; height?: number | null }
   imageBadgeLabel?: string | null
@@ -59,7 +61,12 @@ export function TrustChecklist({
   // neutral backdrop instead.
   const isPortrait = Boolean(image?.width && image?.height && image.height > image.width)
 
-  const sectionBg = backgroundVariant === 'plain' ? 'bg-white' : 'bg-panel-1'
+  const sectionBg =
+    backgroundVariant === 'plain'
+      ? 'bg-white'
+      : backgroundVariant === 'lightBlue'
+        ? LIGHT_BLUE_BAND
+        : 'bg-panel-1'
 
   return (
     <section className={`${sectionBg} py-16`}>

@@ -23,26 +23,35 @@ if (!page) throw new Error('telepharmacy page not found — aborting')
 const layout = page.layout as any[]
 let updated = 0
 
+const hasSteps = layout.some(isStepsIntroBlock)
+const hasMedicine = layout.some(isMedicineProductsBlock)
+if (!hasSteps && !hasMedicine) throw new Error('steps or medicine blocks not found — aborting')
+
 for (const block of layout) {
   if (isStepsIntroBlock(block)) {
-    block.variant = 'tinted'
-    updated++
+    if (block.variant !== 'plain') {
+      block.variant = 'plain'
+      updated++
+    }
   }
   if (block.blockType === 'imageCarousel') {
     const idx = layout.indexOf(block)
     const prev = layout[idx - 1]
-    if (prev && isStepsIntroBlock(prev)) {
-      block.variant = 'tinted'
+    if (prev && isStepsIntroBlock(prev) && block.variant !== 'plain') {
+      block.variant = 'plain'
       updated++
     }
   }
-  if (isMedicineProductsBlock(block)) {
-    block.backgroundVariant = 'plain'
+  if (isMedicineProductsBlock(block) && block.backgroundVariant !== 'lightBlue') {
+    block.backgroundVariant = 'lightBlue'
     updated++
   }
 }
 
-if (updated === 0) throw new Error('no matching blocks found — aborting')
+if (updated === 0) {
+  console.log('steps white, medicine light blue — already set')
+  process.exit(0)
+}
 
 await payload.update({ collection: 'pages', id: page.id, data: { layout }, overrideAccess: true })
 console.log(`section backgrounds updated (${updated} block field(s))`)
