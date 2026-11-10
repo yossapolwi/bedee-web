@@ -42,6 +42,7 @@ import * as migration_20261110_210000_add_feature_steps_cta from './20261110_210
 import * as migration_20261110_212500_block_section_background_variants from './20261110_212500_block_section_background_variants';
 import * as migration_20261110_214100_trust_checklist_image_side from './20261110_214100_trust_checklist_image_side';
 import * as migration_20261110_221300_article_grid_pinned_posts from './20261110_221300_article_grid_pinned_posts';
+import * as migration_20261110_222100_expert_tabs_background_variant from './20261110_222100_expert_tabs_background_variant';
 
 export const migrations = [
   {
@@ -263,5 +264,10 @@ export const migrations = [
     up: migration_20261110_221300_article_grid_pinned_posts.up,
     down: migration_20261110_221300_article_grid_pinned_posts.down,
     name: '20261110_221300_article_grid_pinned_posts',
+  },
+  {
+    up: migration_20261110_222100_expert_tabs_background_variant.up,
+    down: migration_20261110_222100_expert_tabs_background_variant.down,
+    name: '20261110_222100_expert_tabs_background_variant',
   },
 ];

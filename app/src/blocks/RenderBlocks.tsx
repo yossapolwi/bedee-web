@@ -62,6 +62,7 @@ export async function RenderBlocks({
               heading={block.heading}
               doctors={block.doctors ?? []}
               defaultRole={block.defaultRole}
+              backgroundVariant={block.backgroundVariant}
             />
           )
         case 'promoBanner':

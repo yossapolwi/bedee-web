@@ -106,6 +106,15 @@ export const ExpertTabsBlock: Block = {
   slug: 'expertTabs',
   labels: { singular: 'Expert Tabs', plural: 'Expert Tabs' },
   fields: [
+    {
+      name: 'backgroundVariant',
+      type: 'select',
+      defaultValue: 'tinted',
+      options: [
+        { label: 'Tinted (panel)', value: 'tinted' },
+        { label: 'White', value: 'plain' },
+      ],
+    },
     { name: 'heading', type: 'text', localized: true },
     { name: 'doctors', type: 'relationship', relationTo: 'doctors', hasMany: true },
     {
