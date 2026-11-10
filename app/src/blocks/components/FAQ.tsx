@@ -1,3 +1,5 @@
+import { FaqAnswerContent } from '@/lib/faqAnswerBlocks'
+
 type FAQItem = {
   question: string
   answer: string
@@ -30,7 +32,9 @@ export function FAQ({ heading, items, variant = 'plain' }: FAQProps) {
           {items.map((item, i) => (
             <div key={i}>
               <dt className="text-lg font-semibold text-[#222]">{item.question}</dt>
-              <dd className="mt-2 leading-7 text-[#444]">{item.answer}</dd>
+              <dd className="mt-2 leading-7 text-[#444]">
+                <FaqAnswerContent text={item.answer} />
+              </dd>
             </div>
           ))}
         </dl>
