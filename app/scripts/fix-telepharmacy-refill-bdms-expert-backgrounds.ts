@@ -36,12 +36,12 @@ if (medRefill.backgroundVariant !== 'plain') {
   medRefill.backgroundVariant = 'plain'
   updated++
 }
-if (bdmsIntro.variant !== 'plain') {
-  bdmsIntro.variant = 'plain'
+if (bdmsIntro.variant !== 'tinted') {
+  bdmsIntro.variant = 'tinted'
   updated++
 }
-if (expertTabs.backgroundVariant !== 'lightBlue') {
-  expertTabs.backgroundVariant = 'lightBlue'
+if (expertTabs.backgroundVariant !== 'plain') {
+  expertTabs.backgroundVariant = 'plain'
   updated++
 }
 
@@ -51,5 +51,5 @@ if (updated === 0) {
 }
 
 await payload.update({ collection: 'pages', id: page.id, data: { layout }, overrideAccess: true })
-console.log(`section backgrounds updated (${updated} field(s)): med refill + BDMS white, expert tabs light blue`)
+console.log(`section backgrounds updated (${updated} field(s)): med refill white, BDMS light blue, expert tabs white`)
 process.exit(0)
