@@ -63,6 +63,7 @@ function useColumns() {
 }
 
 const GRID_COLS_CLASS: Record<number, string> = { 5: 'grid-cols-5', 3: 'grid-cols-3', 2: 'grid-cols-2' }
+const LIGHT_BLUE_BAND = 'bg-gradient-to-br from-[#EAF4FF] to-[#CFE7FF]'
 
 // Section 5 of plans/04-final-prompt.md §3 — state machine: instant dataset swap,
 // NO crossfade (source has none). Data logic: filter by `role`, not two separate widgets.
@@ -75,7 +76,7 @@ export function ExpertTabs({
   heading?: string | null
   doctors: Doctor[]
   defaultRole?: Role | null
-  backgroundVariant?: 'plain' | 'tinted' | null
+  backgroundVariant?: 'plain' | 'tinted' | 'lightBlue' | null
 }) {
   const [role, setRole] = useState<Role>(defaultRole ?? 'doctor')
   const columns = useColumns()
@@ -94,7 +95,12 @@ export function ExpertTabs({
   const pageCount = pages.length
   const goTo = (i: number) => setPage((i + pageCount) % pageCount)
 
-  const sectionBg = backgroundVariant === 'plain' ? 'bg-white' : 'bg-panel-1'
+  const sectionBg =
+    backgroundVariant === 'plain'
+      ? 'bg-white'
+      : backgroundVariant === 'lightBlue'
+        ? LIGHT_BLUE_BAND
+        : 'bg-panel-1'
 
   return (
     <section id="next" className={`${sectionBg} py-16`}>

@@ -113,6 +113,7 @@ export const ExpertTabsBlock: Block = {
       options: [
         { label: 'Tinted (panel)', value: 'tinted' },
         { label: 'White', value: 'plain' },
+        { label: 'Light blue band', value: 'lightBlue' },
       ],
     },
     { name: 'heading', type: 'text', localized: true },
