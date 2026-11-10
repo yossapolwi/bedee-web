@@ -1,5 +1,7 @@
 import Image from 'next/image'
 
+const LIGHT_BLUE_BAND = 'bg-gradient-to-br from-[#EAF4FF] to-[#CFE7FF]'
+
 type Item = {
   icon: { url?: string | null; alt?: string | null }
   title: string
@@ -19,20 +21,23 @@ export function FeatureSteps({
   heading: string
   description?: string | null
   items: Item[]
-  variant?: 'light' | 'dark' | null
+  variant?: 'light' | 'tinted' | 'dark' | null
   ctaLabel?: string | null
   ctaUrl?: string | null
 }) {
   if (!items?.length) return null
   const isDark = variant === 'dark'
+  const isTinted = variant === 'tinted'
   const cols = items.length === 6 ? 'lg:grid-cols-3' : 'lg:grid-cols-5'
   const safeUrl = (url?: string | null) =>
     url && /^(https?:|mailto:|tel:|\/)/i.test(url) ? url : undefined
   const href = safeUrl(ctaUrl)
   const isExternal = href?.startsWith('http')
 
+  const sectionClass = isDark ? 'bg-primary py-16' : isTinted ? `${LIGHT_BLUE_BAND} py-16` : 'bg-white py-16'
+
   return (
-    <section className={isDark ? 'bg-primary py-16' : 'bg-white py-16'}>
+    <section className={sectionClass}>
       <div className="mx-auto max-w-6xl px-6 md:px-12">
         <header className="w-full text-left">
           {kicker ? (
@@ -58,7 +63,11 @@ export function FeatureSteps({
             <li
               key={i}
               className={`group relative overflow-hidden p-6 transition-colors duration-200 ease-out ${
-                isDark ? 'bg-white/10 hover:bg-white/15' : 'bg-panel-1 hover:bg-[#EAF1FF]'
+                isDark
+                  ? 'bg-white/10 hover:bg-white/15'
+                  : isTinted
+                    ? 'bg-white hover:bg-white/95'
+                    : 'bg-panel-1 hover:bg-[#EAF1FF]'
               }`}
             >
               <div

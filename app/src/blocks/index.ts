@@ -305,6 +305,7 @@ export const FeatureStepsBlock: Block = {
       defaultValue: 'light',
       options: [
         { label: 'Light (white bg, navy text) — homepage default', value: 'light' },
+        { label: 'Light blue band', value: 'tinted' },
         { label: 'Dark (navy bg, white text)', value: 'dark' },
       ],
     },

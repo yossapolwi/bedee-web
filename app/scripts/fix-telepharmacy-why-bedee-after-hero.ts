@@ -83,7 +83,7 @@ const iconIds = Object.fromEntries(
   ),
 )
 
-block.variant = 'light'
+block.variant = 'tinted'
 block.kicker = null
 block.heading = HEADING
 block.description = DESCRIPTION
