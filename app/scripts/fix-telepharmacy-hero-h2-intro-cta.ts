@@ -1,3 +1,4 @@
+// Superseded by fix-telepharmacy-why-bedee-after-hero.ts (uses existing featureSteps).
 import { getPayload } from 'payload'
 import config from '../src/payload.config'
 
