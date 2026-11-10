@@ -83,6 +83,24 @@ export async function RenderBlocks({
             />
           )
         case 'articleGrid': {
+          const pinnedIds = (block.posts ?? [])
+            .map((p: { id?: number } | number) => (typeof p === 'object' && p ? p.id : p))
+            .filter((id: unknown): id is number => typeof id === 'number')
+
+          if (pinnedIds.length > 0) {
+            const pinned = await payload.find({
+              collection: 'posts',
+              where: { id: { in: pinnedIds } },
+              depth: 2,
+              limit: pinnedIds.length,
+            })
+            const byId = new Map(pinned.docs.map((doc) => [doc.id, doc]))
+            const ordered = pinnedIds.map((id: number) => byId.get(id)).filter(Boolean)
+            return (
+              <ArticleGrid key={i} heading={block.heading} posts={ordered as any} variant={block.variant} />
+            )
+          }
+
           const result = await payload.find({
             collection: 'posts',
             limit: block.postCount ?? 3,
