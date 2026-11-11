@@ -10,12 +10,27 @@ const nextConfig = {
       { protocol: 'https', hostname: '*.public.blob.vercel-storage.com' },
     ],
   },
-  // Old WordPress article URLs must keep working after migration.
+  // Old WordPress URLs must keep working after migration.
   async redirects() {
     return [
       {
         source: '/articles/:category/:slug',
         destination: '/article/:category/:slug',
+        permanent: true,
+      },
+      {
+        source: '/news-and-activities/page/:page',
+        destination: '/news-activities?page=:page',
+        permanent: true,
+      },
+      {
+        source: '/news-and-activities',
+        destination: '/news-activities',
+        permanent: true,
+      },
+      {
+        source: '/news-and-activities/:slug',
+        destination: '/news-activities/:slug',
         permanent: true,
       },
       ...legalPageRedirects,
